@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { IApp } from './interfaces/IApp';
 import {
@@ -13,7 +12,8 @@ import BookablesPage from './features/Bookables/BookablePage'
 import BookingsPage from './features/Bookings/BookingsPage';
 import UsersPage from './features/Users/UsersPage';
 import { IMenu, Menus } from './interfaces/IMenu';
-import { IconType } from 'react-icons';
+import { Provider } from 'react-redux';
+import { store } from './configureStore';
 const App: FC<IApp> = (props) => {
   const menus: Menus = [
     {
@@ -47,32 +47,34 @@ const App: FC<IApp> = (props) => {
     }
   }
   return (
-    <Router>
-      <div className="App">
-        <header>
-          <nav>
-            <ul>
-              {menus && menus.map((menu: IMenu) => {
-                const { linkTo, linkText, iconType, className } = menu;
-                return (
-                  <li>
-                    <Link to={linkTo} className={className}>
-                      {getIcons(iconType)}
-                      <span>{linkText}</span>
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          </nav>
-        </header>
-        <Routes>
-          <Route path="/bookings" element={<BookingsPage />} />
-          <Route path="/bookables" element={<BookablesPage />} />
-          <Route path="/users" element={<UsersPage />} />
-        </Routes>
-      </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <div className="App">
+          <header>
+            <nav>
+              <ul>
+                {menus && menus.map((menu: IMenu) => {
+                  const { linkTo, linkText, iconType, className } = menu;
+                  return (
+                    <li>
+                      <Link to={linkTo} className={className}>
+                        {getIcons(iconType)}
+                        <span>{linkText}</span>
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </nav>
+          </header>
+          <Routes>
+            <Route path="/bookings" element={<BookingsPage />} />
+            <Route path="/bookables" element={<BookablesPage />} />
+            <Route path="/users" element={<UsersPage />} />
+          </Routes>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 

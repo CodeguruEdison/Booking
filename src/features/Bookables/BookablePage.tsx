@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 import { IBookablePage } from '../../interfaces/IBookablePage';
-import BookablesList from './BookablesList';
+import BookablesListContainer from './BookablesListContainer';
 
 const BookablePage: FC<IBookablePage> = (props) => {
     return (
         <main className="bookables-page">
-            <BookablesList></BookablesList>
+            <BookablesListContainer></BookablesListContainer>
         </main>
     );
 }

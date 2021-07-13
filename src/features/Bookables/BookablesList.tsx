@@ -1,26 +1,28 @@
 import React, { FC, useState } from 'react'
-import { FaArrowRight } from 'react-icons/fa';
 import { bookables, sessions, days } from '../../assets/static.json'
-import { IBookablesList } from '../../interfaces/IBookablesList';
+import { IBookablesListProps } from '../../interfaces/IBookablesList';
 import BookableNextButton from './BookableNextButton';
-const BookablesList: FC<IBookablesList> = (props) => {
+const BookablesList: FC<IBookablesListProps> = (props) => {
+    const { setGroup, group, bookableIndex, bookables, setBookable,setToggleDetails } = props;
     //const group = "Rooms";
-    const [bookableIndex, setBookableIndex] = useState<number>(0);
+    //    const [bookableIndex, setBookableIndex] = useState<number>(0);
     const [hasDetails, setHasDetails] = useState(false);
-    const [group, setGroup] = useState("Kit");
-    const groups = [...new Set(bookables.map(b => b.group))];
-    const bookablesInGroup = bookables.filter(b => b.group === group);
-    const bookable = bookablesInGroup[bookableIndex];
+    //const [group, setGroup] = useState("Kit");
+    const groups = [...new Set(bookables?.map(b => b.group))];
+    const bookablesInGroup = bookables?.filter(b => b.group === group);
+    const bookable = bookablesInGroup ? bookablesInGroup[bookableIndex!] : undefined;
     const changeBookable = (selectedIndex: number) => {
-        setBookableIndex(selectedIndex);
+        setBookable?.({ bookableIndex: selectedIndex });
         console.log(bookableIndex);
     }
     const changeGroup = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setGroup(e.target.value);
-        setBookableIndex(0);
+        setGroup?.({ group: e.target.value, bookableIndex: 0 });
     }
     const nextBookable = () => {
-        setBookableIndex(i => (i + 1) % bookablesInGroup.length);
+        //setBookableIndex(i => (i + 1) % bookablesInGroup.length);
+    }
+    const toggleDetails = () => {
+
     }
     return (
         <>

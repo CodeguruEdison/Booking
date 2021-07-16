@@ -3,11 +3,8 @@ import { bookables, sessions, days } from '../../assets/static.json'
 import { IBookablesListProps } from '../../interfaces/IBookablesList';
 import BookableNextButton from './BookableNextButton';
 const BookablesList: FC<IBookablesListProps> = (props) => {
-    const { setGroup, group, bookableIndex, bookables, setBookable,setToggleDetails } = props;
-    //const group = "Rooms";
-    //    const [bookableIndex, setBookableIndex] = useState<number>(0);
-    const [hasDetails, setHasDetails] = useState(false);
-    //const [group, setGroup] = useState("Kit");
+    const { setGroup, group, bookableIndex, bookables, setBookable, setToggleDetails, hasDetails } = props;
+    //const [hasDetails, setHasDetails] = useState(false);
     const groups = [...new Set(bookables?.map(b => b.group))];
     const bookablesInGroup = bookables?.filter(b => b.group === group);
     const bookable = bookablesInGroup ? bookablesInGroup[bookableIndex!] : undefined;
@@ -20,9 +17,10 @@ const BookablesList: FC<IBookablesListProps> = (props) => {
     }
     const nextBookable = () => {
         //setBookableIndex(i => (i + 1) % bookablesInGroup.length);
+        //setBookable(i => (i + 1) % bookablesInGroup.length)
     }
     const toggleDetails = () => {
-
+        setToggleDetails?.();
     }
     return (
         <>
@@ -48,12 +46,13 @@ const BookablesList: FC<IBookablesListProps> = (props) => {
                             <h2>{bookable.title}</h2>
                             <span className="controls">
                                 <label>
-                                    <input type="checkbox" checked={hasDetails} onChange={() => setHasDetails(has => !has)} />
+                                    <input type="checkbox" checked={hasDetails} onChange={toggleDetails} />
                                     Show Details
                                 </label>
                             </span>
                         </div>
                         {/* <!--end item header --> */}
+                        <p>{bookable.notes}</p>
                         {hasDetails && (
                             //   <!-- item avilability --> 
                             <div className="item-details">
